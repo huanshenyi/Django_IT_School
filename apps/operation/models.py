@@ -11,20 +11,26 @@ class UserAsk(models.Model):
     add_time = models.DateTimeField(default=datetime.now, verbose_name="挿入時間")
 
     class Meta:
-        verbose_name = "ユーザー問い合わせ"
+        verbose_name = "問い合わせ"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
 
 
 class CourseComments(models.Model):
     """コースレビュー"""
-    user = models.ForeignKey(UserProfile, verbose_name=u"ユーザー")
-    course = models.ForeignKey(Course, verbose_name=u"コース")
+    user = models.ForeignKey(UserProfile, verbose_name=u"ユーザー", on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, verbose_name=u"コース", on_delete=models.CASCADE)
     comments = models.CharField(max_length=200, verbose_name=u"レビュー")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="挿入時間")
 
     class Meta:
-        verbose_name = "レッスンレビュー"
+        verbose_name = "コースレビュー"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.course
 
 
 class UserFavorite(models.Model):
@@ -45,13 +51,13 @@ class UserMessage(models.Model):
     add_time = models.DateTimeField(default=datetime.now, verbose_name="挿入時間")
 
     class Meta:
-        verbose_name = "ユーザーメッセージ"
+        verbose_name = "メッセージ"
         verbose_name_plural = verbose_name
 
 
 class UserCourse(models.Model):
-    user = models.ForeignKey(UserProfile, verbose_name=u"ユーザー")
-    course = models.ForeignKey(Course, verbose_name=u"コース")
+    user = models.ForeignKey(UserProfile, verbose_name=u"ユーザー", on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, verbose_name=u"コース", on_delete=models.CASCADE)
     add_time = models.DateTimeField(default=datetime.now, verbose_name="挿入時間")
 
     class Meta:

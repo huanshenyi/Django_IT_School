@@ -11,7 +11,7 @@ class Course(models.Model):
     usual ->中級
     difficult ->上級   
     """
-    degree = models.CharField(choices=(("easy", "入門"), ('usual', '中級'), ('difficult', '上級')), max_length=20)
+    degree = models.CharField(verbose_name="難易度", choices=(("easy", "入門"), ('usual', '中級'), ('difficult', '上級')), max_length=20)
     learn_time = models.IntegerField(default=0, verbose_name=u'学習時間(分)')
     students = models.IntegerField(default=0, verbose_name=u'学習人数')
     fav_nums = models.IntegerField(default=0, verbose_name=u'お気に入り登録人数')
@@ -23,9 +23,12 @@ class Course(models.Model):
         verbose_name = u'コース'
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.name
+
 
 class Lesson(models.Model):
-    course = models.ForeignKey(Course, verbose_name=u"コース")
+    course = models.ForeignKey(Course, verbose_name=u"コース", on_delete=models.CASCADE)
     name = models.CharField(max_length=100, verbose_name=u"セッションネーム")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"挿入時間")
 
@@ -33,8 +36,11 @@ class Lesson(models.Model):
         verbose_name = u"セッション"
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.name
+
 class Video(models.Model):
-    lesson = models.ForeignKey(Lesson, verbose_name=u"セッション")
+    lesson = models.ForeignKey(Lesson, verbose_name=u"セッション", on_delete=models.CASCADE)
     name = models.CharField(max_length=100, verbose_name=u"動画ネーム")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"挿入時間")
 
@@ -42,8 +48,11 @@ class Video(models.Model):
         verbose_name = u"動画"
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.name
+
 class CourseResource(models.Model):
-    course = models.ForeignKey(Course, verbose_name=u"コース")
+    course = models.ForeignKey(Course, verbose_name=u"コース", on_delete=models.CASCADE)
     name = models.CharField(max_length=100, verbose_name=u"資料ネーム")
     download = models.FileField(upload_to="course/resource/%Y/%m", verbose_name="資源ファイル", max_length=100)
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"挿入時間")
@@ -51,3 +60,6 @@ class CourseResource(models.Model):
     class Meta:
         verbose_name = u"コース資源"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name

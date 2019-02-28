@@ -17,20 +17,23 @@ class UserProfile(AbstractUser):
         verbose_name = "ユーザーデータ"
         verbose_name_plural = verbose_name
 
-    def __unicode__(self):
+    def __str__(self):
         return self.username
 
 
 class EmailVerifyRecord(models.Model):
     code = models.CharField(max_length=20, verbose_name=u"検証コード")
     email = models.EmailField(max_length=50, verbose_name=u"メールアドレス")
-    send_type = models.CharField(choices=(("register", u"新規ユーザー"),
+    send_type = models.CharField(verbose_name="コードタイプ", choices=(("register", u"新規ユーザー"),
                                           ('forget', u'パスワード再発行')), max_length=15)
-    send_time = models.DateTimeField(default=datetime.now)
+    send_time = models.DateTimeField(verbose_name="発行時間", default=datetime.now)
 
     class Meta:
-        verbose_name = u"メールアドレス検証コード"
+        verbose_name = u"メール検証コード"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '{0}({1})'.format(self.code, self.email)
 
 
 """スライド"""
