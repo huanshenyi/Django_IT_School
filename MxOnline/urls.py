@@ -18,9 +18,14 @@ Including another URLconf
 from django.conf.urls import url
 import xadmin
 from django.views.generic import TemplateView
+from users import views
+from django.conf.urls.static import static
+from django.conf import settings
+
+
 
 urlpatterns = [
     url('xadmin/', xadmin.site.urls),
     url("^$", TemplateView.as_view(template_name="index.html"), name="index"),
-    url("login/", TemplateView.as_view(template_name="login.html"), name="login")
-]
+    url("login/", views.LoginView.as_view(), name="login")
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

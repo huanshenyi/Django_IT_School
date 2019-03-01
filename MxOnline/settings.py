@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+#検証のカラム拡張
+AUTHENTICATION_BACKENDS = (
+     'users.views.CustomBackend',
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -134,3 +138,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'courses')
+MEDIA_URL = "/courses/"
