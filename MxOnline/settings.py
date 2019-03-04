@@ -150,3 +150,4 @@ EMAIL_HOST_USER = "306581901@qq.com"
 EMAIL_HOST_PASSWORD = "okvfvvktvlhwbjjj"
 EMAIL_USE_TLS = False
 EMAIL_FROM ="306581901@qq.com"
+#aaaa
