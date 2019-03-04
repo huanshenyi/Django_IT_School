@@ -37,7 +37,7 @@
 <header>
     <div class="c-box fff-box">
         <div class="wp header-box">
-            <p class="fl hd-tips">また仮名前なし</p>
+            <p class="fl hd-tips">デベロッパー</p>
             <ul class="fr hd-bar">
                 <li>github：<span>33333333</span></li>
                 <li class="active"><a href="{% url 'login' %}">[登录]</a></li>
@@ -84,12 +84,12 @@
                     </div>
                      <div class="auto-box marb38">
 
-                        <a class="fr" href="forgetpwd.html">パスワードを忘れた場合</a>
+                        <a class="fr" href="{% url 'forget_pwd' %}">パスワードを忘れた場合</a>
                      </div>
                      <input class="btn btn-green" id="jsLoginBtn" type="submit" value="ログイン > " />
                     {% csrf_token %}
                 </form>
-                <p class="form-p">アカウントありません？<a href="register.html">[新規登録]</a></p>
+                <p class="form-p">アカウントありません？<a href="{% url 'register' %}">[新規登録]</a></p>
             </div>
         </div>
     </div>

@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'organization',
     'operation',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'captcha'
 ]
 AUTH_USER_MODEL = 'users.UserProfile'
 
@@ -138,5 +139,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+#アップロードファイルの保存path
 MEDIA_ROOT = os.path.join(BASE_DIR, 'courses')
 MEDIA_URL = "/courses/"
+
+#emailの設定
+EMAIL_HOST = "smtp.qq.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "306581901@qq.com"
+EMAIL_HOST_PASSWORD = "okvfvvktvlhwbjjj"
+EMAIL_USE_TLS = False
+EMAIL_FROM ="306581901@qq.com"
