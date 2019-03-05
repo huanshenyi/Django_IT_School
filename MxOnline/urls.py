@@ -19,6 +19,7 @@ from django.conf.urls import url, include
 import xadmin
 from django.views.generic import TemplateView
 from users import views
+from organization import views as org_views
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import reverse
@@ -35,4 +36,7 @@ urlpatterns = [
     url("forget/", views.ForgetPwdVied.as_view(), name='forget_pwd'),
     url("reset/(?P<active_code>.*)/$", views.ResetView.as_view(), name='reset_pwd'),
     url("modify_pwd/", views.ModifyPwdView.as_view(), name='modify_pwd'),
+
+    #スクールリストホームページ
+    url("org_list/", org_views.OrgView.as_view(), name='org_list')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

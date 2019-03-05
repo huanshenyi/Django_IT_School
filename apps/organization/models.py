@@ -18,6 +18,7 @@ class CityDict(models.Model):
 class CourseOrg(models.Model):
     name = models.CharField(max_length=50, verbose_name=u"スクール")
     desc = models.TextField(verbose_name=u"スクール説明")
+    category = models.CharField(default="school", verbose_name="スクール分類", max_length=20, choices=(("school", "スクール"), ("individual", "個人"), ('university', "大学")))
     click_nums = models.IntegerField(default=0, verbose_name=u'クリック数')
     fav_nums = models.IntegerField(default=0, verbose_name=u'気に入り数')
     image = models.ImageField(upload_to="org/%Y/%m", verbose_name=u"ロゴ", max_length=100)
