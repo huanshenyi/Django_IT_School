@@ -24,6 +24,8 @@ class CourseOrg(models.Model):
     image = models.ImageField(upload_to="org/%Y/%m", verbose_name=u"ロゴ", max_length=100)
     address = models.CharField(max_length=150, verbose_name=u"住所")
     city = models.ForeignKey(CityDict, verbose_name=u"所在地", on_delete=models.CASCADE)
+    students = models.IntegerField(default=0, verbose_name=u'学習人数')
+    course_nums = models.IntegerField(default=0, verbose_name=u'コース数')
     add_time = models.DateTimeField(verbose_name='追加時間', default=datetime.now)
 
     class Meta:

@@ -4,7 +4,7 @@ from django.contrib.auth.backends import ModelBackend
 from .models import UserProfile, EmailVerifyRecord
 from django.db.models import Q
 from django.views.generic import View
-from .forms import LoginForm, RegisterForm,ForgetForm,ModifyPwdForm
+from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm
 from django.contrib.auth.hashers import make_password
 from utils.email_send import send_register_email
 from django.http import HttpResponse

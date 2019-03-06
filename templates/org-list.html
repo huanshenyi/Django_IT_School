@@ -10,6 +10,28 @@
         </div>
     </section>
 {% endblock %}
+<!--ナビゲーション-->
+{% block ct_nav %}
+	<nav>
+				<div class="nav">
+					<div class="wp">
+						<ul>
+							<li ><a href="index.html">ホームページ</a></li>
+							<li >
+								<a href="course-list.html">
+									無料コース<img class="hot" src="{% static "images/nav_hot.png" %}">
+								</a>
+							</li>
+							<li class="active">
+								<a href="{% url 'org:org_list' %}">スクール一覧</a>
+							</li>
+							<li ><a href="org-list.html">講師一覧</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+{% endblock %}
+
 <!--メイン内容-->
 {% block content %}
 <section>
@@ -18,40 +40,40 @@
 		<div class="listoptions">
 			<ul>
 				<li>
-					<h2>机构类别</h2>
+					<h2>カテゴリ</h2>
 					<div class="cont">
-                        <a href="?city="><span class="active2">全部</span></a>
+                        <a href="?city={{ city_id }}"><span class="{% ifequal category '' %}active2{% endifequal %}">全部</span></a>
 
-                            <a href="?ct=pxjg&city="><span class="">培训机构</span></a>
+                            <a href="?ct=school&city={{ city_id }}"><span class="{% ifequal category 'school' %}active2{% endifequal %}">スクール</span></a>
 
-                            <a href="?ct=gx&city="><span class="">高校</span></a>
+                            <a href="?ct=individual&city={{ city_id }}"><span class="{% ifequal category 'individual' %}active2{% endifequal %}">個人</span></a>
 
-                            <a href="?ct=gr&city="><span class="">个人</span></a>
+                            <a href="?ct=university&city={{ city_id }}"><span class="{% ifequal category 'university' %}active2{% endifequal %}">大学</span></a>
 					</div>
 				</li>
 				<li>
 					<h2>所在地</h2>
 					<div class="more">more</div>
 					<div class="cont">
-                        <a href="?ct="><span class="active2">全部</span></a>
+                        <a href="?ct={{ category }}"><span class="{% ifequal city_id '' %}active2{% endifequal %}">全部</span></a>
                                  {% for city in all_citys %}
-                                <a href="?city=1&ct="><span class="">{{ city.name }}</span></a>
+                                <a href="?city={{ city.id }}&ct={{ category }}"><span class="{% ifequal city_id city.id|stringformat:"i" %}active2{% endifequal %}">{{ city.name }}</span></a>
                                  {% endfor %}
 					</div>
 				</li>
 			</ul>
 		</div>
-		<div class="all">計<span class="key">{{ all_orgs|length }}</span>個</div>
+		<div class="all">計<span class="key">{{org_num}}</span>個</div>
 		<div class="butler_list company list">
 		<div class="layout">
 			<div class="head">
 				<ul class="tab_header">
-					<li class="active"><a href="?ct=&city=">全部</a> </li>
-					<li class=""><a href="?sort=students&ct=&city=">お気に入り数 &#8595;</a></li>
-					<li class=""><a href="?sort=courses&ct=&city=">コース数 &#8595;</a></li>
+					<li class="{% ifequal sort '' %}active{% endifequal %}"><a href="?ct={{ category }}&city={{ city_id }}">全部</a> </li>
+					<li class="{% ifequal sort 'students' %}active{% endifequal %}"><a href="?sort=students&ct={{ category }}&city={{ city_id }}">学習人数 &#8595;</a></li>
+					<li class="{% ifequal sort 'courses' %}active{% endifequal %}"><a href="?sort=courses&ct={{ category }}&city={{ city_id }}">コース数 &#8595;</a></li>
 				</ul>
 			</div>
-              {% for all_org in all_orgs %}
+              {% for all_org in all_orgs.object_list %}
                 <dl class="des difdes">
                     <dt>
                         <a href="org-detail-homepage.html">
@@ -69,7 +91,7 @@
                              </a>
                         </div>
                         <ul class="cont">
-                            <li class="first"><p class="pic9">课程数：<span>1</span></p><p class="c7">お気に入り数：<span>{{ all_org.fav_nums }}</span></p></li>
+                            <li class="first"><p class="pic9">コース数：<span>{{ all_org.course_nums }}</span></p><p class="c7">お気に入り数：<span>{{ all_org.fav_nums }}</span></p></li>
                             <li class="c8" style="padding-left:18px;">{{ all_org.address }}</li>
                             <li class="pic10" style="padding-left:18px;">经典课程：
                                     <a href="/diary/19/">c语言基础入门</a>
@@ -77,72 +99,92 @@
                             </li>
                         </ul>
                     </dd>
-                    <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
+                    <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>問い<br/>合わせ</div>
                 </dl>
               {% endfor %}
 		</div>
 		 <div class="pageturn">
             <ul class="pagelist">
-                            <li class="active"><a href="?page=1">1</a></li>
-                            <li><a href="?page=2" class="page">2</a></li>
-                            <li><a href="?page=3" class="page">3</a></li>
-                    <li class="long"><a href="?page=2">下一页</a></li>
+                {% if all_orgs.has_previous %}
+                    <li class="long"><a href="?{{ all_orgs.previous_page_number.querystring }}">前へ</a></li>
+                {% endif %}
+                {% for page in all_orgs.pages %}
+                    {% if page %}
+                        {% ifequal page all_orgs.number %}
+                           <li class="active"><a href=?"{{ page.querystring }}">{{ page }}</a></li>
+                        {% else %}
+                            <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                        {% endifequal %}
+                    {% else %}
+                        <li class="none"><a href="">...</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if all_orgs.has_next %}
+                    <li class="long"><a href="?{{ all_orgs.next_page_number.querystring }}">次へ</a></li>
+                {% endif %}
             </ul>
         </div>
 		</div>
 	</div>
 	<div class="right companyright">
-			<div class="head">我要学习</div>
+			<div class="head">問い合わせ</div>
 			<form class="rightform" id="jsStayForm">
 				<div>
                     <img src="{% static "images/rightform1.png" %}"/>
-                    <input type="text" name="name" id="companyName" placeholder="名字" maxlength="25" />
+                    <input type="text" name="name" id="companyName" placeholder="お名前" maxlength="25" />
                 </div>
 				<div>
                     <img src="{% static "images/rightform2.png" %}"/>
-                    <input type="text" name="mobile" id="companyMobile" placeholder="联系电话"/>
+                    <input type="text" name="mobile" id="companyMobile" placeholder="電話番号"/>
                 </div>
 				<div>
                     <img src="{% static "images/rightform3.png" %}"/>
-                    <input type="text" name="course_name" id="companyAddress" placeholder="课程名" maxlength="50" />
+                    <input type="text" name="course_name" id="companyAddress" placeholder="コース" maxlength="50" />
                 </div>
                 <p class="error company-tips" id="jsCompanyTips"></p>
-				<input class="btn" type="text" id="jsStayBtn" value="立即咨询 >" />
+				<input class="btn" type="text" id="jsStayBtn" value="内容送信 >" />
+                {% csrf_token %}
             </form>
 		</div>
 
 		<div class="right companyrank layout">
-			<div class="head">授课机构排名</div>
+			<div class="head">スクールランキング</div>
 
-
+                {% for hot_org in hot_orgs %}
                 <dl class="des">
-                    <dt class="num fl">1</dt>
+                    <dt class="num fl">{{ forloop.counter }}</dt>
                     <dd>
-                        <a href="/company/2/"><h1>慕课网</h1></a>
-                        <p>北京市</p>
+                        <a href="/company/2/"><h1>{{ hot_org.name }}</h1></a>
+                        <p>{{ hot_org.address }}</p>
                     </dd>
                 </dl>
-
-                <dl class="des">
-                    <dt class="num fl">2</dt>
-                    <dd>
-                        <a href="/company/2/"><h1>慕课网2</h1></a>
-                        <p>深圳市</p>
-                    </dd>
-                </dl>
-
-                <dl class="des">
-                    <dt class="num fl">3</dt>
-                    <dd>
-                        <a href="/company/2/"><h1>北京大学</h1></a>
-                        <p>北京市</p>
-                    </dd>
-                </dl>
-
-
-
-
+                {% endfor %}
 		</div>
         </div>
 </section>
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+      $(function () {
+          $("#jsStayBtn").on('click', function () {
+              $.ajax({
+                  cache:false,
+                  type:"POST",
+                  url:"{% url "org:add_ask" %}",
+                  data:$('#jsStayForm').serialize(),
+                  async:true,
+                  success:function (data) {
+                      console.log(data)
+                      if(data.status == "success"){
+                          $('#jsStayForm')[0].reset();
+                          alert("送信しました")
+                      }else if(data.status == "fail"){
+                          $('#jsCompanyTips').html(data.msg)
+                      }
+                  },
+              })
+          });
+      });
+    </script>
 {% endblock %}

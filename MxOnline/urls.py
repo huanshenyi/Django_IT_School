@@ -37,6 +37,8 @@ urlpatterns = [
     url("reset/(?P<active_code>.*)/$", views.ResetView.as_view(), name='reset_pwd'),
     url("modify_pwd/", views.ModifyPwdView.as_view(), name='modify_pwd'),
 
-    #スクールリストホームページ
-    url("org_list/", org_views.OrgView.as_view(), name='org_list')
+    #スクールリスト
+    url(r'^org/', include('organization.urls', namespace="org")),
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
