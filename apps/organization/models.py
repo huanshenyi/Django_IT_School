@@ -39,12 +39,13 @@ class CourseOrg(models.Model):
 class Teacher(models.Model):
     org = models.ForeignKey(CourseOrg, verbose_name="所属スクール", on_delete=models.CASCADE)
     name = models.CharField(max_length=50, verbose_name="講師ネーム")
-    work_years = models.ImageField(default=0, verbose_name="実務年数")
+    work_years = models.IntegerField(default=0, verbose_name="実務年数")
     work_company = models.CharField(max_length=50, verbose_name="所属企業", null=True)
     work_position = models.CharField(max_length=50, verbose_name="役職", null=True)
     points = models.CharField(max_length=50, verbose_name="教育手法", null=True)
     click_nums = models.IntegerField(default=0, verbose_name=u'クリック数')
     fav_nums = models.IntegerField(default=0, verbose_name=u'気に入り数')
+    image = models.ImageField(upload_to="teacher/%Y/%m", verbose_name=u"講師アイコン", max_length=100, null=True)
     add_time = models.DateTimeField(verbose_name='追加時間', default=datetime.now)
 
     class Meta:

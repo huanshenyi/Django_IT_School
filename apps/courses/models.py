@@ -1,8 +1,11 @@
 from django.db import models
 from datetime import datetime
+from organization.models import CourseOrg
 
 
 class Course(models.Model):
+    # スクールと関連する外部キー
+    course_org = models.ForeignKey(CourseOrg, verbose_name="スクール", null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, verbose_name=u"コースネーム")
     desc = models.CharField(max_length=225, verbose_name='コース紹介')
     detail = models.TextField(verbose_name=u'コース詳細')
