@@ -22,15 +22,33 @@
 		<div  class=" header">
  			<div class="top">
 				<div class="wp">
-					<div class="fl"><p>GitHub：<b>huanshenyi</b></p></div>
-					<!--登录后跳转-->
-
-
-                        <a style="color:white" class="fr registerbtn" href="register.html">新規登録</a>
-                        <a style="color:white" class="fr loginbtn" href="login.html">ログイン</a>
-
-
-
+                      {% if request.user.is_authenticated %}
+                        <div class="fl">
+                             <div class="fl"><p>GitHub：<b>huanshenyi</b></p></div>
+                        </div>
+                    	<div class="personal">
+                            <dl class="user fr">
+                                <dd>bobby<img class="down fr" src="{% static "images/top_down.png" %}"/></dd>
+                                <dt><img width="20" height="20" src="{% static "media/image/2016/12/default_big_14.png" %}"/></dt>
+                            </dl>
+                            <div class="userdetail">
+                            	<dl>
+	                                <dt><img width="80" height="80" src="{% static "media/image/2016/12/default_big_14.png" %}"/></dt>
+	                                <dd>
+	                                    <h2>django</h2>
+	                                    <p>bobby</p>
+	                                </dd>
+                                </dl>
+                                <div class="btn">
+	                                <a class="personcenter fl" href="usercenter-info.html">編集</a>
+	                                <a class="fr" href="/logout/">ログアウト</a>
+                                </div>
+                            </div>
+                        </div>
+                {% else %}
+                     <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">新規登録</a>
+                     <a style="color:white" class="fr loginbtn" href="{% url 'login' %}">ログイン</a>
+                {% endif %}
 				</div>
 			</div>
 
@@ -59,16 +77,16 @@
 				<div class="nav">
 					<div class="wp">
 						<ul>
-							<li ><a href="index.html">ホームページ</a></li>
-							<li >
-								<a href="course-list.html">
+							<li ><a href="{% url 'index' %}">ホームページ</a></li>
+							<li class="{% if active == 'course' %}active{% endif %}" >
+								<a href="{% url 'courses:course_list' %}">
 									無料コース<img class="hot" src="{% static "images/nav_hot.png" %}">
 								</a>
 							</li>
-							<li >
+							<li class="{% if active == 'org' %}active{% endif %}">
 								<a href="{% url 'org:org_list' %}">スクール一覧</a>
 							</li>
-							<li class="active" ><a href="org-list.html">講師一覧</a></li>
+							<li><a href="org-list.html">講師一覧</a></li>
 						</ul>
 					</div>
 				</div>

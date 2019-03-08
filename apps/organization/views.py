@@ -4,7 +4,6 @@ from .models import CourseOrg, CityDict
 from operation.models import UserFavorite
 from .forms import UserAskForm
 from django.http import HttpResponse
-from courses.models import Course
 
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
@@ -49,6 +48,7 @@ class OrgView(View):
 
         orgs = p.page(page)
         org_num = all_orgs.count()
+        active = 'org'
         return render(request, 'org-list.html', context={
            'all_orgs': orgs,
            'all_citys': all_citys,
@@ -56,7 +56,8 @@ class OrgView(View):
             'category': category,
             'org_num': org_num,
             'hot_orgs': hot_orgs,
-            'sort': sort
+            'sort': sort,
+            'active': active
         })
 
 class AddUserAskView(View):

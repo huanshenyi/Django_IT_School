@@ -19,13 +19,12 @@
 <section class="headerwrap headerwrap2">
     <header>
 		<div  class="header2 header">
-
-                <div class="top">
+             <div class="top">
 				<div class="wp">
-					<div class="fl">
-                        <p>联系方式：<b>3333333333</b></p>
-                    </div>
-                          {% if request.user.is_authenticated %}
+                      {% if request.user.is_authenticated %}
+                        <div class="fl">
+                             <div class="fl"><p>GitHub：<b>huanshenyi</b></p></div>
+                        </div>
                     	<div class="personal">
                             <dl class="user fr">
                                 <dd>bobby<img class="down fr" src="{% static "images/top_down.png" %}"/></dd>

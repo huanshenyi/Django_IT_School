@@ -11,26 +11,7 @@
     </section>
 {% endblock %}
 <!--ナビゲーション-->
-{% block ct_nav %}
-	<nav>
-				<div class="nav">
-					<div class="wp">
-						<ul>
-							<li ><a href="index.html">ホームページ</a></li>
-							<li >
-								<a href="course-list.html">
-									無料コース<img class="hot" src="{% static "images/nav_hot.png" %}">
-								</a>
-							</li>
-							<li class="active">
-								<a href="{% url 'org:org_list' %}">スクール一覧</a>
-							</li>
-							<li ><a href="org-list.html">講師一覧</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-{% endblock %}
+
 
 <!--メイン内容-->
 {% block content %}

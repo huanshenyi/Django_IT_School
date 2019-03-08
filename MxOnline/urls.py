@@ -19,11 +19,8 @@ from django.conf.urls import url, include
 import xadmin
 from django.views.generic import TemplateView
 from users import views
-from organization import views as org_views
 from django.conf.urls.static import static
 from django.conf import settings
-from django.urls import reverse
-
 
 
 urlpatterns = [
@@ -39,6 +36,9 @@ urlpatterns = [
 
     #スクールリスト
     url(r'^org/', include('organization.urls', namespace="org")),
+
+    #コースリスト
+    url(r'^courses/', include('courses.urls', namespace="courses")),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
