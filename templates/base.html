@@ -78,7 +78,7 @@
 					<div class="wp">
 						<ul>
 							<li ><a href="{% url 'index' %}">ホームページ</a></li>
-							<li class="{% if active == 'course' %}active{% endif %}" >
+							<li class="{% if active == 'course' %}active{% elif active == 'detail' %}active{% endif %}" >
 								<a href="{% url 'courses:course_list' %}">
 									無料コース<img class="hot" src="{% static "images/nav_hot.png" %}">
 								</a>

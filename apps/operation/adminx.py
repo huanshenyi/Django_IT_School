@@ -11,7 +11,7 @@ class UserAskAdmin(object):
 class CourseCommentsAdmin(object):
     list_display = ['user', 'course', 'comments', 'add_time']
     search_fields = ['user', 'course', 'comments']
-    list_filter = ['user__name', 'course__name', 'comments', 'add_time']
+    list_filter = ['user__username', 'course__name', 'comments', 'add_time']
 
 
 class UserFavoriteAdmin(object):
@@ -29,7 +29,7 @@ class UserMessageAdmin(object):
 class UserCourseAdmin(object):
     list_display = ['user', 'course', 'add_time']
     search_fields = ['user', 'course']
-    list_filter = ['user__name', 'course', 'add_time']
+    list_filter = ['user__username', 'course', 'add_time']
 
 
 #関連登録

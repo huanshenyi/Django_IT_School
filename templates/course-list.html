@@ -29,18 +29,18 @@
 
                         {% for course in all_course.object_list %}
                              <div class="box">
-                                <a href="course-detail.html">
+                                <a href="{% url 'courses:course_detail' course.id  %}">
                                     <img width="280" height="350" class="scrollLoading" src="{{ MEDIA_URL }}{{ course.image }}"/>
                                 </a>
                                 <div class="des">
-                                    <a href="course-detail.html">
+                                    <a href="{% url 'courses:course_detail' course.id  %}">
                                         <h2>{{ course.name }}</h2>
                                     </a>
                                     <span class="fl">時間(分)：<i class="key">{{ course.learn_time }}</i></span>
                                     <span class="fr">学習人数：{{ course.students }}&nbsp;&nbsp;</span>
                                 </div>
                                 <div class="bottom">
-                                    <a href="course-detail.html"><span class="fl">{{ course.course_org.name }}</span></a>
+                                    <a href="{% url 'courses:course_detail' course.id %}"><span class="fl">{{ course.course_org.name }}</span></a>
                                     <span class="star fr  notlogin
                                         " data-favid="15">
                                         {{ course.fav_nums }}
@@ -79,12 +79,12 @@
                     {% for course in hot_course %}
                     <dl>
 						<dt>
-							<a target="_blank" href="">
+							<a href="{% url 'courses:course_detail' course.id %}">
 								<img width="240" height="220" class="scrollLoading" src="{{ MEDIA_URL }}{{ course.image }}"/>
 							</a>
 						</dt>
 						<dd>
-							<a target="_blank" href=""><h2>{{ course.name }}</h2></a>
+							<a target="_blank" href="{% url 'courses:course_detail' course.id %}"><h2>{{ course.name }}</h2></a>
 							<span class="fl">難易度：<i class="key">{{ course.get_degree_display}}</i></span>
 						</dd>
 					</dl>

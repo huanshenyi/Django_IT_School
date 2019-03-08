@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'^org/', include('organization.urls', namespace="org")),
 
     #コースリスト
-    url(r'^courses/', include('courses.urls', namespace="courses")),
+    url('courses/', include('courses.urls', namespace="courses")),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

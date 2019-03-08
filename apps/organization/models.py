@@ -32,6 +32,13 @@ class CourseOrg(models.Model):
         verbose_name = u'スクール'
         verbose_name_plural = verbose_name
 
+    #コースの数取得
+    def get_course_nums(self):
+        return self.course_set.count()
+    #講師の数取得
+    def get_teacher_num(self):
+        return self.teacher_set.count()
+
     def __str__(self):
         return self.name
 

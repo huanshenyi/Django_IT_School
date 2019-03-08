@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% block title %}コース詳細{% endblock %}
+{% block custom_bread %}
+    <section>
+        <div class="wp">
+            <ul  class="crumbs">
+                <li><a href="{% url 'index' %}">ホームページ</a>></li>
+                <li><a href="{% url 'courses:course_list' %}">コースリスト</a>></li>
+                <li><a href="{% url 'courses:course_list' %}">コース詳細</a>></li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+{% block content %}
+        <section>
+	<div class="wp">
+		<div class="groupPurchase_detail detail">
+			<div class="toppro">
+				<div class="left">
+					<div class="picbox">
+						<div class="tb-booth tb-pic">
+							<img width="440" height="445" src="{{ MEDIA_URL }}{{ course.image }}" class="jqzoom" />
+						</div>
+
+					</div>
+					<div class="des">
+						<h1 title="{{ course.name }}">{{ course.name }}</h1>
+						<span class="key">{{ course.desc }}</span>
+						<div class="prize">
+							<span class="fl">難易度：<i class="key">{{ course.get_degree_display }}</i></span>
+							<span class="fr">学習人数：{{ course.students }}</span>
+						</div>
+						<ul class="parameter">
+							<li><span class="pram word3">学習時間：</span><span>{{ course.learn_time }}</span></li>
+                            <li><span class="pram word3">セッション数：</span><span>{{ course.get_zj_nums }}</span></li>
+                            <li><span class="pram word3">タイプ：</span><span title="">{{ course.category }}</span></li>
+							<li class="piclist"><span class="pram word4">学习用户：</span>
+                                   {% for student in course.get_learn_users %}
+                                    <span class="pic"><img width="40" height="40" src="{{ MEDIA_URL }}{{ student.user.image }}"/></span>
+                                   {% endfor %}
+							</li>
+						</ul>
+						<div class="btns">
+							<div class="btn colectgroupbtn"  id="jsLeftBtn">
+                                  {% if has_fav_course %}お気入{% else %}お気に入り追加{% endif %}
+                            </div>
+                                <div class="buy btn"><a style="color: white" href="course-video.html">スタート</a></div>
+						</div>
+					</div>
+                    <div class="group-share-box">
+                        <div class="bdsharebuttonbox"
+                             data-text="django开始了"
+                             data-desc="我在#慕课网#发现了"
+                             data-comment=""
+                             data-url="/group/groupdetail/15/">
+                            <span class="fl">分享到：</span>
+                            <a href="#" class="bds_more" data-cmd="more"></a>
+                            <a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a>
+                            <a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a>
+                            <a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a>
+                            <a title="分享到人人网" href="#" class="bds_renren" data-cmd="renren"></a>
+                            <a title="分享到微信" href="#" class="bds_weixin" data-cmd="weixin"></a>
+                        </div>
+                    </div>
+				</div>
+				<div class="right">
+					<div class="head">
+						<h1>担当スクール</h1>
+					</div>
+					<div class="pic">
+                        <a href="/company/14/">
+                            <img width="150" height="80" src="{{ MEDIA_URL }}{{ course.course_org.image }}"/>
+                        </a>
+                    </div>
+					<a href="/company/14/">
+                        <h2 class="center" title="{{ course.course_org.name }}">{{ course.course_org.name }}</h2>
+                    </a>
+					<div class="btn  notlogin
+					     "data-favid="14" id="jsRightBtn">
+                        {% if has_fav_org %}お気入{% else %}お気に入り追加{% endif %}
+                    </div>
+					<div class="clear">
+						<ul>
+                            <li>
+                                <span>コース数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   {{ course.course_org.get_course_nums }}</span>
+                            </li>
+                            <li>
+                                <span>講師数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {{ course.course_org.get_teacher_num }}</span>
+                            </li>
+							<li>住所：&nbsp;&nbsp;{{ course.course_org.address }}</li>
+							<li>認&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;証&nbsp;:
+                                &nbsp;&nbsp;
+								    <img title="金牌机构", src="{% static "images/gold.png" %}"/>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+    <section>
+	<div class="wp">
+		<div class="list groupPurchase_detail_pro">
+			<div class="left layout">
+				<div class="head">
+					<ul class="tab_header">
+						<li class="active">コース詳細</li>
+					</ul>
+				</div>
+				<div class="tab_cont tab_cont1">
+
+					<p>&nbsp; &nbsp; {{ course.detail }}</p><p><img src="{% static "media/courses/ueditor/aobama_20161113225044_773.png" %}" title="" alt="aobama.png"/> </p><table><tbody><tr class="firstRow"><td style="word-break: break-all;" width="53" valign="top">课程</td><td style="word-break: break-all;" width="53" valign="top">课时<br/> </td><td style="word-break: break-all;" width="53" valign="top">难度<br/> </td><td style="word-break: break-all;" width="53" valign="top">时长<br/> </td><td style="word-break: break-all;" width="53" valign="top">学习人数<br/> </td><td style="word-break: break-all;" width="53" valign="top">点击数<br/> </td><td style="word-break: break-all;" width="53" valign="top">点击数</td><td style="word-break: break-all;" width="53" valign="top">点击数</td></tr><tr><td style="word-break: break-all;" width="53" valign="top">django开发<br/> </td><td style="word-break: break-all;" width="53" valign="top">20<br/> </td><td style="word-break: break-all;" width="53" valign="top">中级<br/> </td><td style="word-break: break-all;" width="53" valign="top">30<br/> </td><td style="word-break: break-all;" width="53" valign="top">100000<br/> </td><td style="word-break: break-all;" width="53" valign="top">100000<br/> </td><td style="word-break: break-all;" width="53" valign="top">100000<br/> </td><td style="word-break: break-all;" width="53" valign="top">100000<br/> </td></tr><tr><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td></tr><tr><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td></tr><tr><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td></tr><tr><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td><td width="53" valign="top"><br/> </td></tr></tbody></table><p><br/> </p><p><img src="http://img.baidu.com/hi/jx2/j_0025.gif"/> </p><p><br/> </p><h1 class="ue_t" label="Title center" name="tc" style="border-bottom-color:#cccccc;border-bottom-width:2px;border-bottom-style:solid;padding:0px 4px 0px 0px;text-align:center;margin:0px 0px 20px;"><span style="color:#c0504d;">[键入文档标题]</span></h1><p style="text-align:center;"><strong class="ue_t">[键入文档副标题]</strong></p><h3><span class="ue_t" style="font-family:幼圆">[标题 1]</span></h3><p class="ue_t" style="text-indent:2em;">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p class="ue_t" style="text-indent:2em;"><img src="http://127.0.0.1:8000../media/courses/ueditor/57aa86a0000145c512000460_20161210234050_865.jpg" title="" alt="57aa86a0000145c512000460.jpg"/> </p><h3><span class="ue_t" style="font-family:幼圆">[标题 2]</span></h3><p><img src="http://api.map.baidu.com/staticimage?center=116.410899,39.863624&zoom=11&width=530&height=340&markers=116.404,39.915" width="530" height="340"/> </p><p class="ue_t" style="text-indent:2em;">在“开始”选项卡上，通过从快速样式库中为所选文本选择一种外观，您可以方便地更改文档中所选文本的格式。 您还可以使用“开始”选项卡上的其他控件来直接设置文本格式。大多数控件都允许您选择是使用当前主题外观，还是使用某种直接指定的格式。</p><h3><span class="ue_t" style="font-family:幼圆">[标题 3]</span></h3><p>2016-12-10</p><p class="ue_t">对于“插入”选项卡上的库，在设计时都充分考虑了其中的项与文档整体外观的协调性。 您可以使用这些库来插入表格、页眉、页脚、列表、封面以及其他文档构建基块。 您创建的图片、图表或关系图也将与当前的文档外观协调一致。</p><p><br/> </p>
+
+				</div>
+				<div class="tab_cont tab_cont2" >
+					<div class="comment">
+						<div class="comenlist">
+
+	                    </div>
+					</div>
+				</div>
+			</div>
+			<div class="right layout">
+				<div class="head">関連オススメ</div>
+                <div class="group_recommend">
+                    {% for relate_coure in relate_coures %}
+                        <dl>
+                            <dt>
+                                <a target="_blank" href="">
+                                    <img width="240" height="170" class="scrollLoading" src="{{ MEDIA_URL }}{{ relate_coure.image }}"/>
+                                </a>
+                            </dt>
+                            <dd>
+                                <a target="_blank" href=""><h2>{{ relate_coure.name }}</h2></a>
+                                <span class="fl">学習時間(分)：<i class="key">{{ relate_coure.learn_time }}</i></span>
+                            </dd>
+                        </dl>
+                    {% endfor %}
+                </div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+{% block custom_js %}
+    <script type="text/javascript">
+//收藏分享
+function add_fav(current_elem, fav_id, fav_type){
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url:"{% url 'org:add_fav' %}",
+        data:{'fav_id':fav_id, 'fav_type':fav_type},
+        async: true,
+        beforeSend:function(xhr, settings){
+            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+        },
+        success: function(data) {
+            if(data.status == 'fail'){
+                if(data.msg == '登録してない'){
+                    window.location.href="login.html";
+                }else{
+                    alert(data.msg)
+                }
+
+            }else if(data.status == 'success'){
+                current_elem.text(data.msg)
+            }
+        },
+    });
+}
+$(document).ready(function() {
+    $('#jsLeftBtn').on('click', function () {
+        add_fav($(this), {{ course.id }}, 1);
+    });
+});
+
+$(document).ready(function() {
+	$('#jsRightBtn').on('click', function(){
+		add_fav($(this), {{ course.course_org.id }}, 2);
+	});
+});
+
+</script>
+{% endblock %}

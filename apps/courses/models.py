@@ -20,11 +20,20 @@ class Course(models.Model):
     fav_nums = models.IntegerField(default=0, verbose_name=u'お気に入り登録人数')
     image = models.ImageField(upload_to="courses/%Y/%m", verbose_name=u'表紙', max_length=100)
     click_nums = models.IntegerField(default=0, verbose_name=u'クリック数')
+    category = models.CharField(verbose_name='コース区分', max_length=20, default='ウェブ開発')
+    tag = models.CharField(default='', verbose_name='コースラベル', max_length=10)
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"挿入時間")
 
     class Meta:
         verbose_name = u'コース'
         verbose_name_plural = verbose_name
+
+    def get_zj_nums(self):
+        #セッション数を取得
+        return self.lesson_set.all().count()
+
+    def get_learn_users(self):
+        return self.usercourse_set.all()[:5]
 
     def __str__(self):
         return self.name
