@@ -6,7 +6,7 @@
             <ul  class="crumbs">
                 <li><a href="{% url 'index' %}">ホームページ</a>></li>
                 <li><a href="{% url 'courses:course_list' %}">コースリスト</a>></li>
-                <li><a href="{% url 'courses:course_list' %}">コース詳細</a>></li>
+                <li><a href="{% url 'courses:course_detail' course.id %}">コース詳細</a>></li>
             </ul>
         </div>
     </section>
@@ -44,7 +44,7 @@
 							<div class="btn colectgroupbtn"  id="jsLeftBtn">
                                   {% if has_fav_course %}お気入{% else %}お気に入り追加{% endif %}
                             </div>
-                                <div class="buy btn"><a style="color: white" href="course-video.html">スタート</a></div>
+                                <div class="buy btn"><a style="color: white" href="{% url 'courses:course_info' course.id %}">スタート</a></div>
 						</div>
 					</div>
                     <div class="group-share-box">

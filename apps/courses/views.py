@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views import View
-from .models import Course
+from .models import Course,CourseResource
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
-from operation.models import UserFavorite
+from operation.models import UserFavorite,CourseComments
 
 
 class CourseListView(View):
@@ -75,6 +75,38 @@ class CourseDetailView(View):
             'has_fav_course': has_fav_course,
             'has_fav_org': has_fav_org
         })
+
+
+class CourseInfoView(View):
+
+    def get(self, request, course_id):
+        course = Course.objects.get(id=int(course_id))
+        active = 'info'
+        status = 'info'
+        all_resources = CourseResource.objects.filter(course=course)
+        return render(request, 'course-video.html', context={
+         'course': course,
+         'active': active,
+         'all_resources': all_resources,
+         'status': status
+        })
+
+
+class CourseCommentView(View):
+    def get(self, request, course_id):
+        course = Course.objects.get(id=int(course_id))
+        active = 'info'
+        status = 'comment'
+        all_comments =CourseComments.objects.all()
+        return render(request, 'course-comment.html', context={
+            'course': course,
+            'active': active,
+            'status': status
+        })
+
+
+
+
 
 
 

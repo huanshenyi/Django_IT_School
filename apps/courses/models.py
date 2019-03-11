@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-from organization.models import CourseOrg
+from organization.models import CourseOrg, Teacher
 
 
 class Course(models.Model):
@@ -9,6 +9,7 @@ class Course(models.Model):
     name = models.CharField(max_length=50, verbose_name=u"コースネーム")
     desc = models.CharField(max_length=225, verbose_name='コース紹介')
     detail = models.TextField(verbose_name=u'コース詳細')
+    teacher = models.ForeignKey(Teacher, verbose_name="講師", null=True, blank=True, on_delete=models.CASCADE)
     """
     easy ->入門
     usual ->中級
@@ -22,6 +23,8 @@ class Course(models.Model):
     click_nums = models.IntegerField(default=0, verbose_name=u'クリック数')
     category = models.CharField(verbose_name='コース区分', max_length=20, default='ウェブ開発')
     tag = models.CharField(default='', verbose_name='コースラベル', max_length=10)
+    youneed_know = models.CharField(max_length=300, verbose_name='学習前提', default='')
+    teacher_tell = models.CharField(max_length=300, verbose_name='講師からのメッセージ', default='')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"挿入時間")
 
     class Meta:
@@ -32,8 +35,13 @@ class Course(models.Model):
         #セッション数を取得
         return self.lesson_set.all().count()
 
+    #このコース学習してるユーザー
     def get_learn_users(self):
         return self.usercourse_set.all()[:5]
+
+    def get_course_lesson(self):
+        #コースのセッションを取得
+        return self.lesson_set.all()
 
     def __str__(self):
         return self.name
@@ -48,12 +56,18 @@ class Lesson(models.Model):
         verbose_name = u"セッション"
         verbose_name_plural = verbose_name
 
+    def get_lesson_video(self):
+        #セッションの動画を取得
+        return self.video_set.all()
+
     def __str__(self):
         return self.name
 
 class Video(models.Model):
     lesson = models.ForeignKey(Lesson, verbose_name=u"セッション", on_delete=models.CASCADE)
     name = models.CharField(max_length=100, verbose_name=u"動画ネーム")
+    url = models.CharField(max_length=200, verbose_name='動画url', default="")
+    learn_time = models.IntegerField(default=0, verbose_name=u'学習時間(分)')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"挿入時間")
 
     class Meta:
