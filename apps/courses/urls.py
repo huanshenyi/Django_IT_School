@@ -11,7 +11,11 @@ urlpatterns = [
     path("detail/<int:course_id>", views.CourseDetailView.as_view(), name='course_detail'),
     #コース内容
     path("info/<int:course_id>", views.CourseInfoView.as_view(), name="course_info"),
-    #コースレビュー
-    path("comment/<int:course_id>", views.CourseCommentView.as_view(), name="course_comment")
+    #コースレビュー画面
+    path("comment/<int:course_id>", views.CourseCommentView.as_view(), name="course_comment"),
+    #レビュー
+    path("add_comment/", views.AddComentsView.as_view(), name="add_comment"),
+    #動画画面
+    path("video/<int:video_id>", views.VideoPlayView.as_view(), name="video_play")
 
 ]
