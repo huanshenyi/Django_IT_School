@@ -40,5 +40,4 @@ urlpatterns = [
     #コースリスト
     url('courses/', include('courses.urls', namespace="courses")),
 
-
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

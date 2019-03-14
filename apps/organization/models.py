@@ -50,6 +50,7 @@ class Teacher(models.Model):
     work_company = models.CharField(max_length=50, verbose_name="所属企業", null=True)
     work_position = models.CharField(max_length=50, verbose_name="役職", null=True)
     points = models.CharField(max_length=50, verbose_name="教育手法", null=True)
+    age = models.IntegerField(default=20, verbose_name='年齢')
     click_nums = models.IntegerField(default=0, verbose_name=u'クリック数')
     fav_nums = models.IntegerField(default=0, verbose_name=u'気に入り数')
     image = models.ImageField(upload_to="teacher/%Y/%m", verbose_name=u"講師アイコン", max_length=100, null=True)

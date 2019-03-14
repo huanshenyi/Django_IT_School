@@ -86,7 +86,7 @@
 							<li class="{% if active == 'org' %}active{% endif %}">
 								<a href="{% url 'org:org_list' %}">スクール一覧</a>
 							</li>
-							<li><a href="org-list.html">講師一覧</a></li>
+							<li class="{% if active == 'teacher' %}active{% endif %}"><a href="{% url 'org:teacher_list' %}">講師一覧</a></li>
 						</ul>
 					</div>
 				</div>
