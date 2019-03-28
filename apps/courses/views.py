@@ -5,6 +5,7 @@ from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from operation.models import UserFavorite, CourseComments, UserCourse
 from django.http import HttpResponse
 from utils.mixin_utils import LoginRequiredMixin
+from django.db.models import Q
 
 
 class CourseListView(View):
@@ -20,6 +21,13 @@ class CourseListView(View):
             elif sort == "hot":
                 all_course = all_course.order_by('-click_nums')
 
+        #コースキーワード付き検査
+        search_keywords = request.GET.get('keywords', "")
+        if search_keywords:
+            all_course = all_course.filter(
+                Q(name__icontains=search_keywords) |
+                Q(desc__icontains=search_keywords) |
+                Q(detail__icontains=search_keywords))
 
         #人気コース
         hot_course = all_course.order_by('-click_nums')[:3]

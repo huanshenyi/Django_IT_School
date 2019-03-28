@@ -5,6 +5,7 @@ from operation.models import UserFavorite
 from .forms import UserAskForm
 from django.http import HttpResponse
 from courses.models import Course
+from django.db.models import Q
 
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
@@ -16,6 +17,12 @@ class OrgView(View):
         all_orgs = CourseOrg.objects.all()
         #すべての都市
         all_citys = CityDict.objects.all()
+
+        # スクールキーワード付き検査
+        search_keywords = request.GET.get('keywords', "")
+        if search_keywords:
+            all_orgs = all_orgs.filter(
+                Q(name__icontains=search_keywords))
 
         #スクールランキング(クリック数)
         hot_orgs = all_orgs.order_by("-click_nums")[:5]
@@ -197,6 +204,12 @@ class TeacherListView(View):
     def get(self, request):
         all_teachers = Teacher.objects.all()
         active = 'teacher'
+
+     #講師検索
+        search_keyword = request.GET.get('keywords', "")
+        if search_keyword:
+            all_teachers = all_teachers.filter(Q(name__icontains=search_keyword))
+
         #人気度で並び替え
         sort = request.GET.get("sort", '')
         if sort:
